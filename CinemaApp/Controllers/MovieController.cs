@@ -2,6 +2,7 @@
 using CinemaApp.Services.Core.Interfaces;
 using CinemaApp.Web.ViewModels.Movie;
 using Microsoft.AspNetCore.Mvc;
+using static CinemaApp.Web.ViewModels.ValidationMessages.Movie;
 
 namespace CinemaApp.Web.Controllers
 {
@@ -20,5 +21,31 @@ namespace CinemaApp.Web.Controllers
 
             return View(allMovies);
         }
-    }
+
+        [HttpGet]
+        public async Task<IActionResult> Add()
+        {
+            return this.View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Add(MovieFormInputModel inputModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return this.View(inputModel);
+            }
+
+            try
+            {
+                await this.movieService.AddMovieAsync(inputModel);
+            }
+            catch (Exception e)
+            {
+               this.ModelState.AddModelError(string.Empty, ServiceCreateError);
+                return this.View(inputModel);
+            }
+
+            return RedirectToAction(nameof(Index));
+        }
 }

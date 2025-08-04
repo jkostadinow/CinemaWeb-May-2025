@@ -18,7 +18,7 @@ namespace CinemaApp.Services.Core
             this.dbContext = dbContext;
         }
 
-        public`async Task AddMovieAsync(MovieFormInputModel inputModel)
+        public async Task AddMovieAsync(MovieFormInputModel inputModel)
         {
             Movie newMovie = new Movie()
             {

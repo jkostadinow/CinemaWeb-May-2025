@@ -21,7 +21,7 @@
 
         [Required(ErrorMessage = ReleaseDateRequiredMessage)]
         public string ReleaseDate { get; set; } = null!;
-        }
+        
 
         [Required(ErrorMessage = DurationRequiredMessage)]
         [Range(DurationMin, DurationMax, ErrorMessage = DurationRangeMessage)]

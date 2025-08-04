@@ -15,12 +15,12 @@ namespace CinemaApp.Data.Configuration
             entity
                 .Property(m => m.Title)
                 .IsRequired()
-                .HasMaxLength(TitleMaxLenght);
+                .HasMaxLength(TitleMaxLength);
 
             entity
                 .Property(m => m.Genre)
                 .IsRequired()
-                .HasMaxLength(GenreMaxLenght);
+                .HasMaxLength(GenreMaxLength);
 
             entity
                 .Property(m => m.ReleaseDate)
@@ -29,7 +29,7 @@ namespace CinemaApp.Data.Configuration
             entity
                 .Property(m => m.Director)
                 .IsRequired()
-                .HasMaxLength(DirectorMaxLenght);
+                .HasMaxLength(DirectorNameMaxLength);
 
             entity
                 .Property(m => m.Duration)
@@ -38,12 +38,12 @@ namespace CinemaApp.Data.Configuration
             entity
                 .Property(m => m.Description)
                 .IsRequired()
-                .HasMaxLength(DescriptionMaxLenght);
+                .HasMaxLength(DescriptionMaxLength);
 
             entity
                 .Property(m => m.ImageUrl)
                 .IsRequired(false)
-                .HasMaxLength(ImageUrlMaxLenght);
+                .HasMaxLength(ImageUrlMaxLength);
 
             entity
                 .Property(m => m.IsDeleted)
