@@ -15,7 +15,7 @@ namespace CinemaApp.Web.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult>Index()
+        public async Task<IActionResult> Index()
         {
             IEnumerable<AllMoviesIndexViewModel> allMovies = await this.movieService.GetAllMoviesAsync();
 
@@ -31,7 +31,7 @@ namespace CinemaApp.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Add(MovieFormInputModel inputModel)
         {
-            if (!ModelState.IsValid)
+            if (!this.ModelState.IsValid)
             {
                 return this.View(inputModel);
             }
@@ -39,13 +39,16 @@ namespace CinemaApp.Web.Controllers
             try
             {
                 await this.movieService.AddMovieAsync(inputModel);
+                return this.RedirectToAction(nameof(Index));
             }
             catch (Exception e)
             {
-               this.ModelState.AddModelError(string.Empty, ServiceCreateError);
+                Console.WriteLine(e.Message);
+                this.ModelState.AddModelError(string.Empty, ServiceCreateError);
                 return this.View(inputModel);
             }
 
-            return RedirectToAction(nameof(Index));
+            
         }
+    }
 }
