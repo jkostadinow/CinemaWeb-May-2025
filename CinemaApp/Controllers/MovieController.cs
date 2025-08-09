@@ -69,5 +69,46 @@ namespace CinemaApp.Web.Controllers
                 return this.RedirectToAction(nameof(Index));
             }
         }
+        [HttpGet]
+        public async Task<IActionResult> Edit(string? id)
+        {
+            try
+            {
+                MovieFormInputModel? editableMovie = await this.movieService.GetEditableMovieForEditByIdAsync(id);
+                if (editableMovie == null)
+                {
+                    return this.RedirectToAction(nameof(Index));
+                }
+                return this.View(editableMovie);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return this.RedirectToAction(nameof(Index));
+            }
+        }
+        [HttpPost]
+        public async Task<IActionResult> Edit( MovieFormInputModel inputModel)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                return this.View(inputModel);
+            }
+            try
+            {
+              bool editSucces   = await this.movieService.EditMovieAsync(inputModel);
+                if (!editSucces)
+                {
+                    return this.RedirectToAction(nameof(Details));
+                }
+                return this.RedirectToAction(nameof(Details), new { id = inputModel.Id});
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return this.RedirectToAction(nameof(Index));
+            }
+        }
     }
 }

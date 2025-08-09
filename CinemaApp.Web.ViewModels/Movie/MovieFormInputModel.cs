@@ -7,7 +7,7 @@
 
     public class MovieFormInputModel
     {
-        
+        public string? Id { get; set; } 
 
         [Required(ErrorMessage = TitleRequiredMessage)]
         [MinLength(TitleMinLength, ErrorMessage = TitleMinLengthMessage)]
