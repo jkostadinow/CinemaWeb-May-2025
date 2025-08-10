@@ -34,5 +34,7 @@ namespace CinemaApp.Data.Models
         [Comment("Indicates if the movie is deleted")]
         public bool IsDeleted { get; set; } = false;
 
+        public virtual ICollection<ApplicationUserMovie> UserWatchlists { get; set; } = new HashSet<ApplicationUserMovie>();
+
     }
 }
