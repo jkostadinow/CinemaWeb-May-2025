@@ -88,7 +88,7 @@ namespace CinemaApp.Web.Controllers
             }
         }
         [HttpPost]
-        public async Task<IActionResult> Edit( MovieFormInputModel inputModel)
+        public async Task<IActionResult> Edit(MovieFormInputModel inputModel)
         {
             if (!this.ModelState.IsValid)
             {
@@ -96,12 +96,12 @@ namespace CinemaApp.Web.Controllers
             }
             try
             {
-              bool editSucces   = await this.movieService.EditMovieAsync(inputModel);
+                bool editSucces = await this.movieService.EditMovieAsync(inputModel);
                 if (!editSucces)
                 {
                     return this.RedirectToAction(nameof(Details));
                 }
-                return this.RedirectToAction(nameof(Details), new { id = inputModel.Id});
+                return this.RedirectToAction(nameof(Details), new { id = inputModel.Id });
 
             }
             catch (Exception e)
@@ -109,6 +109,51 @@ namespace CinemaApp.Web.Controllers
                 Console.WriteLine(e.Message);
                 return this.RedirectToAction(nameof(Index));
             }
+
         }
+        [HttpGet]
+        public async Task<IActionResult> Delete(string? id)
+        {
+            try
+            {
+                MovieDetailsViewModel? movieDetails = await this.movieService.GetMovieDetailsByIdAsync(id);
+                if (movieDetails == null)
+                {
+                    return this.RedirectToAction(nameof(Index));
+                }
+                return this.View(movieDetails);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return this.RedirectToAction(nameof(Index));
+            }
+        }
+        [HttpPost]
+        public async Task<IActionResult> Delete(MovieDetailsViewModel inputModel)
+        {
+            try
+            {
+                if (!this.ModelState.IsValid)
+                {
+                    return this.RedirectToAction(nameof(Index));
+                }
+
+                bool deleteResult = await this.movieService.DeleteMovieAsync(inputModel.Id);
+                if (!deleteResult)
+                {
+                    return this.RedirectToAction(nameof(Index));
+                }
+                return this.RedirectToAction(nameof(Index));
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+
+                return this.RedirectToAction(nameof(Index));
+            }
+        }
+
+
     }
 }

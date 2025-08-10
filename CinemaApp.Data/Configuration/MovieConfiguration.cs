@@ -50,7 +50,10 @@ namespace CinemaApp.Data.Configuration
                 .IsRequired()
                 .HasDefaultValue(false);
 
-           entity
+            entity
+                .HasQueryFilter(m => !m.IsDeleted);
+
+            entity
                 .HasData(this.SeedMovies());
 
         }
